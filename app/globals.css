@@ -1,26 +1,100 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --color-cake-primary: #D4A373; /* Warm caramel/wood */
+  --color-cake-secondary: #CCD5AE; /* Sage green */
+  --color-cake-accent: #E9EDC9; /* Light sage */
+  --color-cake-bg: #FAEDCD; /* Parchment cream */
+  --color-cake-card: #FEFAE0; /* Lighter parchment */
+  --color-cake-text: #3D261D; /* Deep espresso */
+  --color-cake-text-light: #7F5539; /* Coffee brown */
+  --color-cake-pink: #D4A373; /* Map to caramel */
+  --color-cake-rose: #A44A3F; /* Brick red / Bookmark red */
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+.dark {
+  --color-cake-primary: #9C6644; /* Darker caramel */
+  --color-cake-secondary: #4A5D23; /* Dark olive */
+  --color-cake-accent: #6B705C; /* Muted sage */
+  --color-cake-bg: #2C1E16; /* Very dark roasted coffee */
+  --color-cake-card: #3A2A22; /* Slightly lighter coffee */
+  --color-cake-text: #EAE0D5; /* Cream text */
+  --color-cake-text-light: #C6AC8F; /* Lighter latte */
+  --color-cake-pink: #9C6644;
+  --color-cake-rose: #C25953; /* Muted brick red */
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@theme {
+  --color-cake-primary: var(--color-cake-primary);
+  --color-cake-secondary: var(--color-cake-secondary);
+  --color-cake-accent: var(--color-cake-accent);
+  --color-cake-bg: var(--color-cake-bg);
+  --color-cake-card: var(--color-cake-card);
+  --color-cake-text: var(--color-cake-text);
+  --color-cake-text-light: var(--color-cake-text-light);
+  --color-cake-pink: var(--color-cake-pink);
+  --color-cake-rose: var(--color-cake-rose);
+  
+  --font-playfair: var(--font-playfair), "Playfair Display", serif;
+  --font-inter: var(--font-inter), "Inter", sans-serif;
+}
+
+/* Force standard hardcoded colors to adapt to dark mode */
+.dark .bg-white {
+  background-color: var(--color-cake-card);
+}
+.dark .bg-white\/90 {
+  background-color: rgba(37, 29, 26, 0.9);
+}
+.dark .bg-gray-50, .dark .bg-gray-100 {
+  background-color: rgba(255, 183, 178, 0.05); /* cake-primary with opacity */
+}
+.dark .border-gray-200 {
+  border-color: rgba(255, 183, 178, 0.15); /* border-cake-primary with opacity */
+}
+.dark .text-white {
+  color: var(--color-cake-text);
+}
+.dark .bg-cake-rose .text-white, .dark .bg-cake-text .text-white {
+  color: #FFFDF9; /* Keep white text inside actual solid buttons */
+}
+.dark .bg-black\/50, .dark .bg-black\/60 {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+@layer base {
+  body {
+    background-color: var(--color-cake-bg);
+    color: var(--color-cake-text);
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  /* Smooth transition for backgrounds on dark mode toggle */
+  div, nav, section, main, button, input, textarea, select {
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  opacity: 0;
+}
+
+@keyframes slideSide {
+  from { opacity: 0; transform: translateX(100%); }
+  to { opacity: 1; transform: translateX(0); }
+}
+.animate-slide-side {
+  animation: slideSide 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
